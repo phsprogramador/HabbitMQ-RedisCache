@@ -33,17 +33,16 @@ namespace Messenger
 
         public bool Add(Notification notification)
         {
-			try
-			{
-                string value = JsonConvert.SerializeObject(notification);
-                byte[] body = Encoding.UTF8.GetBytes(value);
-                channel.BasicPublish(string.Empty, queueName, null, body);
+            try
+            {
+            	string value = JsonConvert.SerializeObject(notification);
+            	byte[] body = Encoding.UTF8.GetBytes(value);
+            	channel.BasicPublish(string.Empty, queueName, null, body);
             }
-			catch (Exception)
-			{
-                return false;
+            catch (Exception)
+            {
+            	return false;
             }
-
             return true;
         }
     }
