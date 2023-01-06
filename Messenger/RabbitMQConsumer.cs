@@ -36,7 +36,7 @@ namespace Messenger
         {
             try
             {
-                var consumer = new EventingBasicConsumer(channel);
+                EventingBasicConsumer? consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (ModuleHandle, ea) =>
                 {
                     ReadOnlyMemory<byte> body = ea.Body;
@@ -49,29 +49,11 @@ namespace Messenger
                 };
 
                 channel.BasicConsume(queueName, autoAck: true, consumer: consumer);
-
-
-                //EventingBasicConsumer? consumidor = new EventingBasicConsumer(channel);
-
-                //consumidor.Received += (ModuleHandle, ea) =>
-                //{
-                //    ReadOnlyMemory<byte> body = ea.Body;
-                //    string? json = Encoding.UTF8.GetString(body.ToArray());
-                //    if(json != null)
-                //    {
-                //        Notification notification = JsonConvert.DeserializeObject<Notification>(json);
-                //        client.RequestClients(notification);
-                //    }
-                //};
-
-                //channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumidor);
             }
             catch (Exception ex)
             {
-
             }
         }
-
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
